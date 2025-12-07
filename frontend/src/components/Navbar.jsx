@@ -7,30 +7,43 @@ export default function Navbar() {
   const { user, logout } = useAuth()
   const nav = useNavigate()
 
+  const baseBtn =
+    "px-3 py-1 rounded-md font-semibold transition-colors duration-200"
+
   return (
     <nav className="bg-gray-800 p-4 flex items-center justify-between">
+      {/* Logo y enlaces principales */}
       <div className="flex items-center gap-4">
-        <Link to="/" className="text-xl font-bold">Electric Games</Link>
-        <Link to="/" className="text-sm">Tienda</Link>
+        <Link to="/" className="text-xl font-bold text-white hover:text-blue-400">
+          Electric Games
+        </Link>
+        <Link
+          to="/"
+          className={`${baseBtn} text-white hover:bg-gray-700`}
+        >
+          Tienda
+        </Link>
 
-        {/* Biblioteca para cualquier usuario logueado */}
         {user && (
-          <Link to="/library" className="text-sm underline">
+          <Link
+            to="/library"
+            className={`${baseBtn} text-white hover:bg-gray-700`}
+          >
             Biblioteca
           </Link>
         )}
       </div>
 
+      {/* Botones de usuario / login */}
       <div className="flex items-center gap-4">
         {user ? (
           <>
-            <span className="text-sm">{user.username}</span>
+            <span className="text-white font-medium">{user.username}</span>
 
-            {/* Admin Panel solo si es admin */}
             {user.isAdmin && (
               <button
                 onClick={() => nav('/admin')}
-                className="text-sm underline"
+                className={`${baseBtn} text-white hover:bg-gray-700`}
               >
                 Admin
               </button>
@@ -41,17 +54,23 @@ export default function Navbar() {
                 logout()
                 nav('/login')
               }}
-              className="px-3 py-1 bg-red-600 rounded"
+              className={`${baseBtn} bg-red-600 text-white hover:bg-red-700`}
             >
               Logout
             </button>
           </>
         ) : (
           <>
-            <Link to="/login" className="px-3 py-1 bg-blue-600 rounded">
+            <Link
+              to="/login"
+              className={`${baseBtn} bg-blue-600 text-white hover:bg-blue-700`}
+            >
               Login
             </Link>
-            <Link to="/register" className="px-3 py-1 bg-green-600 rounded">
+            <Link
+              to="/register"
+              className={`${baseBtn} bg-green-600 text-white hover:bg-green-700`}
+            >
               Register
             </Link>
           </>
