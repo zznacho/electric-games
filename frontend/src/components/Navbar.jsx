@@ -1,4 +1,5 @@
 // --- frontend/src/components/Navbar.jsx ---
+import logo from '../assets/electric-games.jpg'
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../auth/AuthProvider'
@@ -14,9 +15,11 @@ export default function Navbar() {
     <nav className="bg-gray-800 p-4 flex items-center justify-between">
       {/* Logo y enlaces principales */}
       <div className="flex items-center gap-4">
-        <Link to="/" className="text-xl font-bold text-white hover:text-blue-400">
-          Electric Games
+        <Link to="/" className="flex items-center gap-2 text-xl font-bold text-white hover:text-blue-400">
+        <img src={logo} alt="Logo" className="w-12 h-12" />
+        Electric Games
         </Link>
+
         <Link
           to="/"
           className={`${baseBtn} text-white hover:bg-gray-700`}
@@ -45,7 +48,7 @@ export default function Navbar() {
                 onClick={() => nav('/admin')}
                 className={`${baseBtn} text-white hover:bg-gray-700`}
               >
-                Admin
+                Gestiones
               </button>
             )}
 
@@ -79,4 +82,3 @@ export default function Navbar() {
     </nav>
   )
 }
-
