@@ -52,7 +52,7 @@ const run = async () => {
         description: 'Sigue a Kratos, un antiguo dios de la guerra, mientras recorre los reinos nórdicos con su hijo Atreus. La trama principal se centra en Kratos tratando de controlar su ira para ser un buen padre, mientras se embarcan en una misión personal para cumplir el último deseo de su difunta esposa.',
         price: 49.99,
         image: '/uploads/1765125367481-460130303.jfif'
-      }
+      },
       {
         name: 'Red Dead Redemption 2',
         description: 'Arthur Morgan y la banda Van der Linde, forajidos que huyen de la ley en Estados Unidos, en 1899, durante el fin del Salvaje Oeste, enfrentándose a agentes federales y dilemas internos mientras intentan sobrevivir y elegir entre sus ideales y la lealtad al grupo, en una épica historia de honor, traición y redención en un vasto mundo abierto lleno de detalles y personajes complejos.',
