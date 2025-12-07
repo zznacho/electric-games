@@ -36,27 +36,22 @@ const run = async () => {
     const games = [
       {
         name: 'Cyberpunk 2077',
-        description: 'RPG futurista',
+        description: 'Es un videojuego de acción y rol de mundo abierto ambientado en la peligrosa megalópolis de Night City, donde controlas a V, un mercenario que se enfrenta a las consecuencias de un atraco fallido',
         price: 59.99,
-        genre: 'RPG',
-        platform: 'PC',
-        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBiF8g6CLUT5YjZW1RCwNVH1sR4W5z6Y58tDqL3LRKIAhTKHFAkZpaUZKJpmcSTN_JbgrFhcKwelkMoSvHTS5yL6d_-xAHNiQRPAERWQ&s=10"
+        image: '/uploads/1765125271747-659092627.jpg'
+  
       },
       {
         name: 'Hollow Knight',
-        description: 'Metroidvania',
+        description: 'Cuenta la historia del Caballero, en su búsqueda para descubrir los secretos del largamente abandonado reino de Hallownest, cuyas profundidades atraen a los aventureros y valientes con la promesa de tesoros o la respuesta a misterios antiguos.',
         price: 14.99,
-        genre: 'Metroidvania',
-        platform: 'PC',
-        image: "https://assets.nintendo.com/image/upload/ar_16:9,c_lpad,w_1240/b_white/f_auto/q_auto/store/software/switch/70010000003208/4643fb058642335c523910f3a7910575f56372f612f7c0c9a497aaae978d3e51"
+        image: '/uploads/1765125348379-375503186.jpg'
       },
       {
         name: 'God of War',
-        description: 'Aventura',
+        description: 'Sigue a Kratos, un antiguo dios de la guerra, mientras recorre los reinos nórdicos con su hijo Atreus. La trama principal se centra en Kratos tratando de controlar su ira para ser un buen padre, mientras se embarcan en una misión personal para cumplir el último deseo de su difunta esposa.',
         price: 49.99,
-        genre: 'Acción',
-        platform: 'PS5',
-        image: "https://cdn1.epicgames.com/offer/3ddd6a590da64e3686042d108968a6b2/EGS_GodofWar_SantaMonicaStudio_S1_2560x1440-5d74d9b240bba8f2c40920dcde7c5c67_2560x1440-5d74d9b240bba8f2c40920dcde7c5c67"
+        image: '/uploads/1765125367481-460130303.jfif'
       }
     ];
 

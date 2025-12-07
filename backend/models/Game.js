@@ -5,7 +5,6 @@ const GameSchema = new mongoose.Schema({
   description: { type: String, required: true },
   price: { type: Number, required: true },
   image: { type: String, required: true },
-  category: { type: String, default: 'General' }
 });
 
 export default mongoose.model('Game', GameSchema);
