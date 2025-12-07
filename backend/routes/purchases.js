@@ -42,15 +42,21 @@ router.post('/:gameId', async (req, res) => {
       await existing.save();
     }
 
+    // Crear orden guardando los datos del juego en gameData
     const order = new Order({
       buyer: userId,
       game: gameId,
+      gameData: {
+        name: game.name,
+        price: game.price,
+        image: game.image,
+        description: game.description
+      },
       price: game.price,
       status: 'pending'
     });
 
     await order.save();
-    await order.populate('game', 'name price image');
 
     res.status(201).json(order);
   } catch (err) {
@@ -65,9 +71,17 @@ router.get('/library/me', async (req, res) => {
     const orders = await Order.find({ 
       buyer: req.user._id,
       status: 'paid'
-    }).populate('game', 'name price image');
+    });
 
-    res.json(orders);
+    // Enviar los datos del juego desde gameData
+    res.json(orders.map(o => ({
+      _id: o._id,
+      name: o.gameData.name,
+      price: o.gameData.price,
+      image: o.gameData.image,
+      description: o.gameData.description,
+      status: o.status
+    })));
   } catch (err) {
     console.error(err);
     res.status(500).json({ msg: 'Error del servidor' });
@@ -78,8 +92,8 @@ router.get('/library/me', async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     const orders = await Order.find({ buyer: req.user._id })
-      .populate('game', 'name price image')
       .sort({ createdAt: -1 });
+
     res.json(orders);
   } catch (err) {
     console.error(err);
@@ -93,7 +107,7 @@ router.post('/:orderId/pay', async (req, res) => {
     const orderId = req.params.orderId;
     const { cardHolder, cardNumber } = req.body;
 
-    const order = await Order.findById(orderId).populate('game', 'name price');
+    const order = await Order.findById(orderId);
     if (!order) return res.status(404).json({ msg: 'Orden no encontrada' });
     if (order.buyer.toString() !== req.user._id.toString() && !req.user.isAdmin) {
       return res.status(403).json({ msg: 'No autorizado para pagar esta orden' });
@@ -132,7 +146,7 @@ router.post('/:orderId/cancel', async (req, res) => {
 // Descargar archivo simulado del juego
 router.get('/:orderId/download', async (req, res) => {
   try {
-    const order = await Order.findById(req.params.orderId).populate('game', 'name');
+    const order = await Order.findById(req.params.orderId);
     if (!order) return res.status(404).json({ msg: 'Orden no encontrada' });
 
     if (order.buyer.toString() !== req.user._id.toString()) {
@@ -144,13 +158,13 @@ router.get('/:orderId/download', async (req, res) => {
     }
 
     const fileContent = `
-Juego: ${order.game.name}
+Juego: ${order.gameData.name}
 Gracias por tu compra.
 
 Descarga en curso.
     `;
 
-    const safeName = order.game.name.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+    const safeName = order.gameData.name.replace(/[^a-z0-9]/gi, '_').toLowerCase();
     res.setHeader('Content-Disposition', `attachment; filename=${safeName}.txt`); 
     res.setHeader('Content-Type', 'text/plain');
 
