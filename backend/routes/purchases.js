@@ -9,7 +9,7 @@ const router = express.Router();
 // Todas las rutas requieren autenticación
 router.use(authMiddleware);
 
-// Crear compra para un juego (solo si no tiene otra orden 'pending')
+// Crear compra para un juego (solo si no tiene otra orden 'pending' y no está comprado)
 router.post('/:gameId', async (req, res) => {
   try {
     const userId = req.user._id;
@@ -18,18 +18,29 @@ router.post('/:gameId', async (req, res) => {
     const game = await Game.findById(gameId);
     if (!game) return res.status(404).json({ msg: 'Juego no encontrado' });
 
-   const existing = await Order.findOne({ buyer: userId, status: 'pending' });
+    // Verificar si ya compró el juego
+    const alreadyPurchased = await Order.findOne({ 
+      buyer: userId,
+      game: gameId,
+      status: 'paid'
+    });
+    if (alreadyPurchased) {
+      return res.status(400).json({ msg: 'Ya compraste este juego' });
+    }
 
-if (existing) {
-  // Si es el mismo juego, devolvemos la orden existente
-  if (existing.game.toString() === gameId) {
-    return res.json(existing);
-  }
+    // Verificar si hay orden pendiente
+    const existing = await Order.findOne({ buyer: userId, status: 'pending' });
 
-  // Cancelamos la anterior automáticamente
-  existing.status = 'cancelled';
-  await existing.save();
-}
+    if (existing) {
+      // Si es el mismo juego, devolvemos la orden existente
+      if (existing.game.toString() === gameId) {
+        return res.json(existing);
+      }
+
+      // Cancelamos la anterior automáticamente
+      existing.status = 'cancelled';
+      await existing.save();
+    }
 
     const order = new Order({
       buyer: userId,
@@ -62,7 +73,6 @@ router.get('/library/me', async (req, res) => {
     res.status(500).json({ msg: 'Error del servidor' });
   }
 });
-
 
 // Obtener compras del usuario
 router.get('/', async (req, res) => {
@@ -151,6 +161,4 @@ Descarga en curso.
   }
 });
 
-
 export default router;
-
