@@ -35,6 +35,7 @@ app.use('/api/purchases', purchasesRoutes);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Inicio del servidor
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server escuchando en puerto ${PORT}`);
 });
+
